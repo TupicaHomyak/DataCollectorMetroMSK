@@ -1,0 +1,3 @@
+public enum RamType {
+    DDR_SDRAM, SDR_SDRAM, SDRAM, EDO_DRAM, FPM_DRAM, DRAM, SRAM
+}
