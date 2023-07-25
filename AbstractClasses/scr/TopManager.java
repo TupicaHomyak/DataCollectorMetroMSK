@@ -1,12 +1,14 @@
-import static java.lang.Math.random;
-public class TopManager extends Company implements Employee {
-    private final int FIXED_SALARY  = (int) Math.round(random() * (140000 - 115000) + 115000);
-    private final double BONUS_PERCENT =  1.5;
-    //фикс. часть + бонус в виде 150% от заработной платы, если доход компании более 10 млн рублей.
-    private int salary = (int)(FIXED_SALARY + (COMPANY_REVENUE > 10000000 ? BONUS_PERCENT * FIXED_SALARY : 0));
-
+public class TopManager  implements Employee {
+    //фикс.часть + бонус в виде 150% от заработной платы, если доход компании более 10 млн рублей.
+    private final int salary = (int) (Math.random() * 80000) + 80000;
+    private final Company company;
+    public TopManager(Company company) {
+        this.company = company;
+    }
     @Override
     public int getMonthSalary() {
+        if (company.getIncome() > 10000000)
+            return (int) (salary * 1.5);
         return salary;
     }
 }

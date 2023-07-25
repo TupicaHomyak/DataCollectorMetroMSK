@@ -1,8 +1,8 @@
 import static java.lang.Math.random;
 
-public class Operator extends Company implements Employee {
+public class Operator  implements Employee {
     //Operator — зарплата складывается только из фиксированной части.
-    private int salary = (int) Math.round(random() * (140000 - 115000) + 115000);
+    private final int salary = (int) (Math.random() * 35000) + 35000;
 
     @Override
     public int getMonthSalary() {
