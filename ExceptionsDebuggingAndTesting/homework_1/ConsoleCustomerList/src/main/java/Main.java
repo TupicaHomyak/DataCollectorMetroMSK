@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import org.apache.logging.log4j.*;
+
 
 public class Main {
     private static final String ADD_COMMAND = "add Василий Петров " +
@@ -9,16 +11,21 @@ public class Main {
             COMMAND_EXAMPLES;
     private static final String helpText = "Command examples:\n" + COMMAND_EXAMPLES;
 
+    private static final Logger queriesLogger = LogManager.getLogger("queriesLogger");
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         CustomerStorage executor = new CustomerStorage();
 
-        while (true) {
+
+        while (true) try {
             String command = scanner.nextLine();
             String[] tokens = command.split("\\s+", 2);
+            queriesLogger.info("Пример логирования запроса. " + command);
 
             if (tokens[0].equals("add")) {
                 executor.addCustomer(tokens[1]);
+
             } else if (tokens[0].equals("list")) {
                 executor.listCustomers();
             } else if (tokens[0].equals("remove")) {
@@ -30,6 +37,11 @@ public class Main {
             } else {
                 System.out.println(COMMAND_ERROR);
             }
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+            queriesLogger.error("Пример логирования ошибки. " + ex.getMessage());
         }
+
     }
 }
+

@@ -1,5 +1,6 @@
 import core.Station;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,12 +21,10 @@ public class RouteCalculator {
         if (route != null) {
             return route;
         }
-
         route = getRouteWithOneConnection(from, to);
-        if (route != null) {
+        if (route != null && route.size() > 0) {
             return route;
         }
-
         route = getRouteWithTwoConnections(from, to);
         return route;
     }
@@ -44,11 +43,11 @@ public class RouteCalculator {
         return duration;
     }
 
-    private List<Station> getRouteOnTheLine(Station from, Station to) {
+    public List<Station> getRouteOnTheLine(Station from, Station to) {
         if (!from.getLine().equals(to.getLine())) {
             return null;
         }
-        List<Station> route = new ArrayList<>();
+        ArrayList<Station> route = new ArrayList<>();
         List<Station> stations = from.getLine().getStations();
         int direction = 0;
         for (Station station : stations) {
@@ -80,7 +79,7 @@ public class RouteCalculator {
             return null;
         }
 
-        List<Station> route = new ArrayList<>();
+        ArrayList<Station> route = new ArrayList<>();
 
         List<Station> fromLineStations = from.getLine().getStations();
         List<Station> toLineStations = to.getLine().getStations();
@@ -118,7 +117,7 @@ public class RouteCalculator {
         return null;
     }
 
-    private List<Station> getRouteWithTwoConnections(Station from, Station to) {
+    public List<Station> getRouteWithTwoConnections(Station from, Station to) {
         if (from.getLine().equals(to.getLine())) {
             return null;
         }
@@ -135,7 +134,7 @@ public class RouteCalculator {
                 if (connectedLineRoute == null) {
                     continue;
                 }
-                List<Station> way = new ArrayList<>();
+                ArrayList<Station> way = new ArrayList<>();
                 way.addAll(getRouteOnTheLine(from, srcStation));
                 way.addAll(connectedLineRoute);
                 way.addAll(getRouteOnTheLine(dstStation, to));
@@ -145,7 +144,6 @@ public class RouteCalculator {
                 }
             }
         }
-
         return route;
     }
 }

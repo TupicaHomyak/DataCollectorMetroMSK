@@ -5,9 +5,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class StationIndex {
-    private final Map<Integer, Line> number2line;
-    private final TreeSet<Station> stations;
-    private final Map<Station, TreeSet<Station>> connections;
+     Map<Integer, Line> number2line;
+     TreeSet<Station> stations;
+     Map<Station, TreeSet<Station>> connections;
 
     public StationIndex() {
         number2line = new HashMap<>();
@@ -54,7 +54,9 @@ public class StationIndex {
     }
 
     public Set<Station> getConnectedStations(Station station) {
-        return connections.containsKey(station) ?
-                connections.get(station) : new TreeSet<>();
+        if(connections.containsKey(station)) {
+            return connections.get(station);
+        }
+        return new TreeSet<>();
     }
 }
